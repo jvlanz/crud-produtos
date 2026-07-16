@@ -35,7 +35,8 @@ public class MenuPrincipal {
                     menuCliente.iniciar();
                     break;
                 case 3:
-                    
+                    menuPedido.iniciar();
+                    break;
 
                 case 0:
                     System.out.println("Encerrando...");

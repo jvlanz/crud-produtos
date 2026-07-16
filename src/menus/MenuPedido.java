@@ -1,0 +1,205 @@
+package menus;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import dao.PedidoDao;
+import modelos.Cliente;
+import modelos.Pedido;
+
+public class MenuPedido {
+
+    private PedidoDao dao = new PedidoDao();
+    private Scanner sc = new Scanner(System.in);
+
+
+    public void inserirPedido() {
+
+        System.out.print("ID do cliente: ");
+        int idCliente = sc.nextInt();
+        sc.nextLine();
+
+        Cliente cliente = new Cliente();
+        cliente.setId(idCliente);
+
+        LocalDate data = LocalDate.now();
+
+        System.out.print("Status do pedido: ");
+        String status = sc.nextLine();
+
+
+        Pedido pedido = new Pedido(cliente, data, status);
+
+        dao.salvar(pedido);
+
+        System.out.println("Pedido cadastrado com sucesso!");
+    }
+
+
+    public void alterarPedido() {
+
+        System.out.print("ID do pedido: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("ID do cliente: ");
+        int idCliente = sc.nextInt();
+        sc.nextLine();
+
+        Cliente cliente = new Cliente();
+        cliente.setId(idCliente);
+
+        LocalDate data = LocalDate.now();
+
+        System.out.print("Novo status: ");
+        String status = sc.nextLine();
+
+
+        Pedido pedido = new Pedido(id, cliente, data, status);
+
+        dao.alterar(pedido);
+
+        System.out.println("Pedido alterado com sucesso!");
+    }
+
+
+    public void consultarPedido() {
+
+        System.out.print("ID do pedido: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+
+        Pedido pedido = dao.consultar(id);
+
+
+        if (pedido != null) {
+
+            System.out.println("\n------ Pedido ------");
+            System.out.println("ID: " + pedido.getId());
+            System.out.println("Cliente: " + pedido.getCliente().getId());
+            System.out.println("Data: " + pedido.getData());
+            System.out.println("Status: " + pedido.getStatus());
+
+        } else {
+
+            System.out.println("Pedido não encontrado.");
+
+        }
+    }
+
+
+    public void listarPedidos() {
+
+        ArrayList<Pedido> lista = dao.consultarTodos();
+
+
+        if (lista.isEmpty()) {
+
+            System.out.println("Nenhum pedido cadastrado.");
+            return;
+
+        }
+
+
+        System.out.println("\n------ Lista de Pedidos ------");
+
+
+        for (Pedido pedido : lista) {
+
+            System.out.println(
+                    "ID: " + pedido.getId()
+                    + " | Cliente: " + pedido.getCliente().getId()
+                    + " | Data: " + pedido.getData()
+                    + " | Status: " + pedido.getStatus()
+            );
+
+        }
+    }
+
+
+    public void deletarPedido() {
+
+        System.out.print("ID do pedido: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+
+        dao.deletar(id);
+
+
+        System.out.println("Pedido removido com sucesso!");
+
+    }
+
+
+    public void mostrarMenu() {
+
+        System.out.println("\n------ MENU PEDIDOS ------");
+        System.out.println("1 - Inserir pedido");
+        System.out.println("2 - Alterar pedido");
+        System.out.println("3 - Consultar pedido");
+        System.out.println("4 - Listar pedidos");
+        System.out.println("5 - Deletar pedido");
+        System.out.println("0 - Voltar");
+        System.out.print("Escolha: ");
+
+    }
+
+
+    public void iniciar() {
+
+        int opcao;
+
+
+        do {
+
+            mostrarMenu();
+
+            opcao = sc.nextInt();
+            sc.nextLine();
+
+
+            switch (opcao) {
+
+                case 1:
+                    inserirPedido();
+                    break;
+
+
+                case 2:
+                    alterarPedido();
+                    break;
+
+
+                case 3:
+                    consultarPedido();
+                    break;
+
+
+                case 4:
+                    listarPedidos();
+                    break;
+
+
+                case 5:
+                    deletarPedido();
+                    break;
+
+
+                case 0:
+                    System.out.println("Voltando...");
+                    break;
+
+
+                default:
+                    System.out.println("Opção inválida!");
+
+            }
+
+
+        } while (opcao != 0);
+
+    }
+}
