@@ -1,12 +1,13 @@
-package modelos;
+package menus;
 
 import java.util.ArrayList;
 
 import java.util.Scanner;
 
 import dao.ProdutoDao;
+import modelos.Produto;
 
-public class Menu {
+public class MenuProduto {
     private ProdutoDao dao = new ProdutoDao();
     private Scanner sc = new Scanner(System.in);
 
