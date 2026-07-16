@@ -18,6 +18,7 @@ public class MenuPrincipal {
             System.out.println("\n====== MENU PRINCIPAL ======");
             System.out.println("1 - Produtos");
             System.out.println("2 - Clientes");
+            System.out.println("3 - Pedidos");
             System.out.println("0 - Sair");
             System.out.print("Escolha: ");
 
@@ -33,6 +34,8 @@ public class MenuPrincipal {
                 case 2:
                     menuCliente.iniciar();
                     break;
+                case 3:
+                    
 
                 case 0:
                     System.out.println("Encerrando...");
