@@ -15,7 +15,7 @@ public class ProdutoDao implements ICRUD<Produto, Integer> {
 
     @Override
     public Produto salvar(Produto prod) {
-        String sql = "INSERT INTO tb_produtos(descricao, preco, estoque)values(?,?,?)";
+        String sql = "INSERT INTO tb_produtos(descricao, preco, estoque)VALUES(?,?,?)";
 
         Connection con = ConectaDB.conectar();
         try {
