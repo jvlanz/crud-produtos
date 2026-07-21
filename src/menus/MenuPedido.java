@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import dao.ItemPedidoDao;
 import dao.PedidoDao;
 import dao.ProdutoDao;
 import modelos.Cliente;
@@ -16,6 +17,7 @@ public class MenuPedido {
     private PedidoDao dao = new PedidoDao();
     private Scanner sc = new Scanner(System.in);
     private ProdutoDao produtoDao = new ProdutoDao();
+    private ItemPedidoDao itemPedidoDao = new ItemPedidoDao();
 
     public void inserirPedido() {
 
@@ -151,6 +153,34 @@ public class MenuPedido {
 
     }
 
+    public void listarItensPedido() {
+
+        System.out.print("ID do pedido: ");
+        int idPedido = sc.nextInt();
+        sc.nextLine();
+
+        ArrayList<ItemPedido> itens = itemPedidoDao.consultarItensPedido(idPedido);
+
+        if (itens.isEmpty()) {
+            System.out.println("Esse pedido não possui itens.");
+            return;
+        }
+
+        System.out.println("\n------ ITENS DO PEDIDO ------");
+
+        for (ItemPedido item : itens) {
+
+            Produto produto = produtoDao.consultar(item.getProduto().getId());
+
+            System.out.printf(
+                    "Produto: %s | Quantidade: %d | Preço: R$ %.2f%n",
+                    produto.getDescricao(),
+                    item.getQuantidade(),
+                    produto.getPreco());
+
+        }
+    }
+
     public void mostrarMenu() {
 
         System.out.println("\n------ MENU PEDIDOS ------");
@@ -159,6 +189,7 @@ public class MenuPedido {
         System.out.println("3 - Consultar pedido");
         System.out.println("4 - Listar pedidos");
         System.out.println("5 - Deletar pedido");
+        System.out.println("6 - Listar produtos");
         System.out.println("0 - Voltar");
         System.out.print("Escolha: ");
 
@@ -195,6 +226,9 @@ public class MenuPedido {
 
                 case 5:
                     deletarPedido();
+                    break;
+                case 6:
+                    // listarItensPedido();
                     break;
 
                 case 0:

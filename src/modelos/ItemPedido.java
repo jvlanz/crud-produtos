@@ -9,6 +9,17 @@ public class ItemPedido {
     public ItemPedido() {
     }
 
+    public ItemPedido(Produto produto, int quantidade) {
+        this.produto = produto;
+        this.quantidade = quantidade;
+    }
+
+    public ItemPedido(int id, Produto produto, int quantidade) {
+        this.id = id;
+        this.produto = produto;
+        this.quantidade = quantidade;
+    }
+
     public int getId() {
         return id;
     }

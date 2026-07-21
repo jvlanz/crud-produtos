@@ -51,7 +51,7 @@ public class ItemPedidoDao {
                 item.setId(rs.getInt("id"));
                 Produto produto = new Produto();
                 produto.setId(rs.getInt("id_produto"));
-                
+
                 item.setProduto(produto);
                 item.setQuantidade(rs.getInt("quantidade"));
 
@@ -90,5 +90,6 @@ public class ItemPedidoDao {
             e.printStackTrace();
         }
     }
+    
 
 }
