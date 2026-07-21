@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dao.PedidoDao;
+import dao.ProdutoDao;
 import modelos.Cliente;
+import modelos.ItemPedido;
 import modelos.Pedido;
+import modelos.Produto;
 
 public class MenuPedido {
 
     private PedidoDao dao = new PedidoDao();
     private Scanner sc = new Scanner(System.in);
+    private ProdutoDao produtoDao = new ProdutoDao();
 
     public void inserirPedido() {
 
@@ -28,6 +32,35 @@ public class MenuPedido {
         String status = sc.nextLine();
 
         Pedido pedido = new Pedido(cliente, data, status);
+
+        String resposta = null;
+
+        do {
+
+            System.out.print("ID do produto: ");
+            int idProduto = sc.nextInt();
+
+            Produto produto = produtoDao.consultar(idProduto);
+
+            if (produto == null) {
+                System.out.println("Produto não encontrado!");
+                continue;
+            }
+
+            System.out.print("Quantidade: ");
+            int quantidade = sc.nextInt();
+            sc.nextLine();
+
+            ItemPedido item = new ItemPedido();
+            item.setProduto(produto);
+            item.setQuantidade(quantidade);
+
+            pedido.getItens().add(item);
+
+            System.out.print("Deseja adicionar outro produto? (S/N): ");
+            resposta = sc.nextLine();
+
+        } while (resposta.equalsIgnoreCase("S"));
 
         dao.salvar(pedido);
 

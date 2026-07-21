@@ -9,6 +9,7 @@ public class Pedido {
     private LocalDate data;
     private String status;
     private ArrayList<Produto> listaProdutos;
+    private ArrayList<ItemPedido> itens = new ArrayList<>();
 
     public Pedido() {
     }
@@ -64,6 +65,14 @@ public class Pedido {
 
     public void setListaProdutos(ArrayList<Produto> listaProdutos) {
         this.listaProdutos = listaProdutos;
+    }
+
+    public ArrayList<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(ArrayList<ItemPedido> itens) {
+        this.itens = itens;
     }
 
 }

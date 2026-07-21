@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import interfaces.ICRUD;
 import modelos.Cliente;
+import modelos.ItemPedido;
 import modelos.Pedido;
 import utils.ConectaDB;
 
@@ -14,18 +15,34 @@ public class PedidoDao implements ICRUD<Pedido, Integer> {
 
     @Override
     public Pedido salvar(Pedido obj) {
+
         String sql = "INSERT INTO tb_pedidos(id_cliente, data_pedido, status) VALUES (?, ?, ?)";
 
         Connection con = ConectaDB.conectar();
 
         try {
-            PreparedStatement stmt = con.prepareStatement(sql);
+            PreparedStatement stmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, obj.getCliente().getId());
             stmt.setDate(2, java.sql.Date.valueOf(obj.getData()));
             stmt.setString(3, obj.getStatus());
             stmt.executeUpdate();
+            
+            ResultSet rs = stmt.getGeneratedKeys(); //recupera o id gerado
 
+            if (rs.next()) {
+                obj.setId(rs.getInt(1));
+            }
+
+            rs.close();
             stmt.close();
+
+            // Salva os itens do pedido
+            ItemPedidoDao itemDao = new ItemPedidoDao();
+
+            for (ItemPedido item : obj.getItens()) {
+                itemDao.salvar(item, obj.getId());
+            }
+
             con.close();
 
         } catch (Exception e) {
@@ -34,6 +51,7 @@ public class PedidoDao implements ICRUD<Pedido, Integer> {
 
         return obj;
     }
+    
 
     @Override
     public void deletar(Integer id) {
