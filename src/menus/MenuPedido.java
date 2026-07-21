@@ -228,7 +228,7 @@ public class MenuPedido {
                     deletarPedido();
                     break;
                 case 6:
-                    // listarItensPedido();
+                    listarItensPedido();
                     break;
 
                 case 0:
