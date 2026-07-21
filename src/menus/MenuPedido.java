@@ -18,6 +18,7 @@ public class MenuPedido {
     private Scanner sc = new Scanner(System.in);
     private ProdutoDao produtoDao = new ProdutoDao();
     private ItemPedidoDao itemPedidoDao = new ItemPedidoDao();
+    private ArrayList<ItemPedido> carrinho = new ArrayList<>();
 
     public void inserirPedido() {
 
@@ -180,6 +181,77 @@ public class MenuPedido {
 
         }
     }
+
+    public void adicionaCarrinho() {
+
+        System.out.println("ID do produto: ");
+        int idProduto = sc.nextInt();
+        Produto produto = produtoDao.consultar(idProduto);
+        if (produto == null) {
+            System.out.println("Produto não encontrado!");
+            return;
+        }
+
+        ItemPedido item = new ItemPedido();
+        item.setProduto(produto);
+        carrinho.add(item);
+
+        System.out.println("Produto adicionado ao carrinho!");
+    }
+
+    public void listarCarrinho() {
+
+        if (carrinho.isEmpty()) {
+            System.out.println("Carrinho vazio!");
+            return;
+        }
+        System.out.println("\n------ CARRINHO ------");
+        double total = 0;
+        for (ItemPedido item : carrinho) {
+            Produto produto = item.getProduto();
+            double subtotal = produto.getPreco() * item.getQuantidade();
+            total += subtotal;
+            System.out.printf("%s | Quantidade: %d | Subtotal: R$ %.2f%n", produto.getDescricao(), item.getQuantidade(),
+                    subtotal);
+        }
+
+        System.out.printf("Total: R$ %.2f%n", total);
+    }
+
+    public void removerCarrinho() {
+        System.out.print("ID do produto para remover: ");
+        int idProduto = sc.nextInt();
+        sc.nextLine();
+        for (ItemPedido item : carrinho) {
+            if (item.getProduto().getId() == idProduto) {
+                carrinho.remove(item);
+                System.out.println("Produto removido do carrinho!");
+                return;
+            }
+        }
+        System.out.println("Produto não encontrado no carrinho.");
+    }
+    public void finalizarPedido() {
+
+    if(carrinho.isEmpty()) {
+        System.out.println("Carrinho vazio!");
+        return;
+    }
+    System.out.print("ID do cliente: ");
+    int idCliente = sc.nextInt();
+    sc.nextLine();
+    Cliente cliente = new Cliente();
+    cliente.setId(idCliente);
+    LocalDate data = LocalDate.now();
+    Pedido pedido = new Pedido(cliente, data, "Finalizado");
+    // adiciona os produtos do carrinho no pedido
+    for(ItemPedido item : carrinho) {
+        pedido.getItens().add(item);
+    }
+    dao.salvar(pedido);
+    carrinho.clear();
+    System.out.println("Pedido finalizado com sucesso!");
+}
 
     public void mostrarMenu() {
 
