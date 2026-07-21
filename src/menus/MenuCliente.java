@@ -104,6 +104,7 @@ public class MenuCliente {
             System.out.println("ID: " + cliente.getId());
             System.out.println("CPF: " + cliente.getCpf());
             System.out.println("Nome: " + cliente.getNome());
+            System.out.println("Email: " + cliente.getEmail());
             System.out.println("Rua: " + cliente.getRua());
             System.out.println("Número: " + cliente.getNumeroRua());
             System.out.println("Bairro: " + cliente.getBairro());
@@ -129,12 +130,17 @@ public class MenuCliente {
 
         for (Cliente cliente : lista) {
 
-            System.out.println(
-                    "ID: " + cliente.getId()
-                            + " | CPF: " + cliente.getCpf()
-                            + " | Nome: " + cliente.getNome()
-                            + " | Cidade: " + cliente.getCidade()
-                            + " | Estado: " + cliente.getEstado());
+            System.out.print("ID: " + cliente.getId() + " | ");
+            System.out.print("CPF: " + cliente.getCpf() + " | ");
+            System.out.print("Nome: " + cliente.getNome() + " | ");
+            System.out.print("Email: " + cliente.getEmail() + " | ");
+            System.out.print("Rua: " + cliente.getRua() + " | ");
+            System.out.print("Número: " + cliente.getNumeroRua() + " | ");
+            System.out.print("Bairro: " + cliente.getBairro() + " | ");
+            System.out.print("CEP: " + cliente.getCep() + " | ");
+            System.out.print("Cidade: " + cliente.getCidade() + " | ");
+            System.out.print("Estado: " + cliente.getEstado() + " | ");
+            System.out.println();
         }
     }
 

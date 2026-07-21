@@ -8,6 +8,7 @@ public class MenuPrincipal {
 
     private MenuProduto menuProduto = new MenuProduto();
     private MenuCliente menuCliente = new MenuCliente();
+    private MenuPedido menuPedido = new MenuPedido();
 
     public void iniciar() {
 

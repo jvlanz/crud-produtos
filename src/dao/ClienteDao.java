@@ -13,19 +13,20 @@ public class ClienteDao implements ICRUD<Cliente, Integer> {
 
     @Override
     public Cliente salvar(Cliente obj) {
-        String sql = "INSERT INTO tb_clientes(id, cpf, nome, rua, numeroRua, bairro, cep, cidade, estado)VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO tb_clientes(cpf, nome, email, rua, numeroRua, bairro, cep, cidade, estado)VALUES(?,?,?,?,?,?,?,?,?)";
         Connection con = ConectaDB.conectar();
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setString(1, obj.getCpf());
             stmt.setString(2, obj.getNome());
-            stmt.setString(3, obj.getRua());
-            stmt.setInt(4, obj.getNumeroRua());
-            stmt.setString(5, obj.getBairro());
-            stmt.setInt(6, obj.getCep());
-            stmt.setString(7, obj.getCidade());
-            stmt.setString(8, obj.getEstado());
+            stmt.setString(3, obj.getEmail());
+            stmt.setString(4, obj.getRua());
+            stmt.setInt(5, obj.getNumeroRua());
+            stmt.setString(6, obj.getBairro());
+            stmt.setInt(7, obj.getCep());
+            stmt.setString(8, obj.getCidade());
+            stmt.setString(9, obj.getEstado());
 
             stmt.executeUpdate();
 
@@ -113,6 +114,7 @@ public class ClienteDao implements ICRUD<Cliente, Integer> {
                 cliente.setId(rs.getInt("id"));
                 cliente.setCpf(rs.getString("cpf"));
                 cliente.setNome(rs.getString("nome"));
+                cliente.setNome(rs.getString("email"));
                 cliente.setRua(rs.getString("rua"));
                 cliente.setNumeroRua(rs.getInt("numeroRua"));
                 cliente.setBairro(rs.getString("bairro"));
@@ -157,10 +159,11 @@ public class ClienteDao implements ICRUD<Cliente, Integer> {
                 cliente.setId(rs.getInt("id"));
                 cliente.setCpf(rs.getString("cpf"));
                 cliente.setNome(rs.getString("nome"));
+                cliente.setEmail(rs.getString("email"));
                 cliente.setRua(rs.getString("rua"));
                 cliente.setNumeroRua(rs.getInt("numeroRua"));
                 cliente.setBairro(rs.getString("bairro"));
-                cliente.setCep(rs.getInt("cep")); 
+                cliente.setCep(rs.getInt("cep"));
                 cliente.setCidade(rs.getString("cidade"));
                 cliente.setEstado(rs.getString("estado"));
 

@@ -13,7 +13,6 @@ public class MenuPedido {
     private PedidoDao dao = new PedidoDao();
     private Scanner sc = new Scanner(System.in);
 
-
     public void inserirPedido() {
 
         System.out.print("ID do cliente: ");
@@ -28,14 +27,12 @@ public class MenuPedido {
         System.out.print("Status do pedido: ");
         String status = sc.nextLine();
 
-
         Pedido pedido = new Pedido(cliente, data, status);
 
         dao.salvar(pedido);
 
         System.out.println("Pedido cadastrado com sucesso!");
     }
-
 
     public void alterarPedido() {
 
@@ -55,7 +52,6 @@ public class MenuPedido {
         System.out.print("Novo status: ");
         String status = sc.nextLine();
 
-
         Pedido pedido = new Pedido(id, cliente, data, status);
 
         dao.alterar(pedido);
@@ -63,16 +59,13 @@ public class MenuPedido {
         System.out.println("Pedido alterado com sucesso!");
     }
 
-
     public void consultarPedido() {
 
         System.out.print("ID do pedido: ");
         int id = sc.nextInt();
         sc.nextLine();
 
-
         Pedido pedido = dao.consultar(id);
-
 
         if (pedido != null) {
 
@@ -89,11 +82,9 @@ public class MenuPedido {
         }
     }
 
-
     public void listarPedidos() {
 
         ArrayList<Pedido> lista = dao.consultarTodos();
-
 
         if (lista.isEmpty()) {
 
@@ -102,22 +93,18 @@ public class MenuPedido {
 
         }
 
-
         System.out.println("\n------ Lista de Pedidos ------");
-
 
         for (Pedido pedido : lista) {
 
             System.out.println(
                     "ID: " + pedido.getId()
-                    + " | Cliente: " + pedido.getCliente().getId()
-                    + " | Data: " + pedido.getData()
-                    + " | Status: " + pedido.getStatus()
-            );
+                            + " | Cliente: " + pedido.getCliente().getId()
+                            + " | Data: " + pedido.getData()
+                            + " | Status: " + pedido.getStatus());
 
         }
     }
-
 
     public void deletarPedido() {
 
@@ -125,14 +112,11 @@ public class MenuPedido {
         int id = sc.nextInt();
         sc.nextLine();
 
-
         dao.deletar(id);
-
 
         System.out.println("Pedido removido com sucesso!");
 
     }
-
 
     public void mostrarMenu() {
 
@@ -147,11 +131,9 @@ public class MenuPedido {
 
     }
 
-
     public void iniciar() {
 
         int opcao;
-
 
         do {
 
@@ -160,44 +142,36 @@ public class MenuPedido {
             opcao = sc.nextInt();
             sc.nextLine();
 
-
             switch (opcao) {
 
                 case 1:
                     inserirPedido();
                     break;
 
-
                 case 2:
                     alterarPedido();
                     break;
-
 
                 case 3:
                     consultarPedido();
                     break;
 
-
                 case 4:
                     listarPedidos();
                     break;
-
 
                 case 5:
                     deletarPedido();
                     break;
 
-
                 case 0:
                     System.out.println("Voltando...");
                     break;
-
 
                 default:
                     System.out.println("Opção inválida!");
 
             }
-
 
         } while (opcao != 0);
 

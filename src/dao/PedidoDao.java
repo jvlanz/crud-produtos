@@ -20,11 +20,9 @@ public class PedidoDao implements ICRUD<Pedido, Integer> {
 
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
-
             stmt.setInt(1, obj.getCliente().getId());
             stmt.setDate(2, java.sql.Date.valueOf(obj.getData()));
             stmt.setString(3, obj.getStatus());
-
             stmt.executeUpdate();
 
             stmt.close();
@@ -45,9 +43,7 @@ public class PedidoDao implements ICRUD<Pedido, Integer> {
 
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
-
             stmt.setInt(1, id);
-
             stmt.executeUpdate();
 
             stmt.close();
