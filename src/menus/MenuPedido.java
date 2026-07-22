@@ -231,40 +231,42 @@ public class MenuPedido {
         }
         System.out.println("Produto não encontrado no carrinho.");
     }
+
     public void finalizarPedido() {
 
-    if(carrinho.isEmpty()) {
-        System.out.println("Carrinho vazio!");
-        return;
+        if (carrinho.isEmpty()) {
+            System.out.println("Carrinho vazio!");
+            return;
+        }
+        System.out.print("ID do cliente: ");
+        int idCliente = sc.nextInt();
+        sc.nextLine();
+        Cliente cliente = new Cliente();
+        cliente.setId(idCliente);
+        LocalDate data = LocalDate.now();
+        Pedido pedido = new Pedido(cliente, data, "Finalizado");
+        // adiciona os produtos do carrinho no pedido
+        for (ItemPedido item : carrinho) {
+            pedido.getItens().add(item);
+        }
+        dao.salvar(pedido);
+        carrinho.clear();
+        System.out.println("Pedido finalizado com sucesso!");
     }
-    System.out.print("ID do cliente: ");
-    int idCliente = sc.nextInt();
-    sc.nextLine();
-    Cliente cliente = new Cliente();
-    cliente.setId(idCliente);
-    LocalDate data = LocalDate.now();
-    Pedido pedido = new Pedido(cliente, data, "Finalizado");
-    // adiciona os produtos do carrinho no pedido
-    for(ItemPedido item : carrinho) {
-        pedido.getItens().add(item);
-    }
-    dao.salvar(pedido);
-    carrinho.clear();
-    System.out.println("Pedido finalizado com sucesso!");
-}
 
     public void mostrarMenu() {
-
         System.out.println("\n------ MENU PEDIDOS ------");
-        System.out.println("1 - Inserir pedido");
-        System.out.println("2 - Alterar pedido");
-        System.out.println("3 - Consultar pedido");
-        System.out.println("4 - Listar pedidos");
-        System.out.println("5 - Deletar pedido");
-        System.out.println("6 - Listar produtos");
+        System.out.println("1 - Adicionar produto ao carrinho");
+        System.out.println("2 - Remover produto do carrinho");
+        System.out.println("3 - Listar carrinho");
+        System.out.println("4 - Finalizar pedido");
+        System.out.println("5 - Consultar pedido");
+        System.out.println("6 - Listar pedidos");
+        System.out.println("7 - Listar itens do pedido");
+        System.out.println("8 - Alterar pedido");
+        System.out.println("9 - Deletar pedido");
         System.out.println("0 - Voltar");
         System.out.print("Escolha: ");
-
     }
 
     public void iniciar() {
@@ -281,26 +283,39 @@ public class MenuPedido {
             switch (opcao) {
 
                 case 1:
-                    inserirPedido();
+                    adicionaCarrinho();
                     break;
 
                 case 2:
-                    alterarPedido();
+                    removerCarrinho();
                     break;
 
                 case 3:
-                    consultarPedido();
+                    listarCarrinho();
                     break;
 
                 case 4:
-                    listarPedidos();
+                    finalizarPedido();
                     break;
 
                 case 5:
-                    deletarPedido();
+                    consultarPedido();
                     break;
+
                 case 6:
+                    listarPedidos();
+                    break;
+
+                case 7:
                     listarItensPedido();
+                    break;
+
+                case 8:
+                    alterarPedido();
+                    break;
+
+                case 9:
+                    deletarPedido();
                     break;
 
                 case 0:
@@ -309,7 +324,6 @@ public class MenuPedido {
 
                 default:
                     System.out.println("Opção inválida!");
-
             }
 
         } while (opcao != 0);
