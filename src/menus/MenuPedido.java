@@ -184,16 +184,24 @@ public class MenuPedido {
 
     public void adicionaCarrinho() {
 
-        System.out.println("ID do produto: ");
+        System.out.print("ID do produto: ");
         int idProduto = sc.nextInt();
+
         Produto produto = produtoDao.consultar(idProduto);
+
         if (produto == null) {
             System.out.println("Produto não encontrado!");
             return;
         }
 
+        System.out.print("Quantidade: ");
+        int quantidade = sc.nextInt();
+        sc.nextLine();
+
         ItemPedido item = new ItemPedido();
         item.setProduto(produto);
+        item.setQuantidade(quantidade);
+
         carrinho.add(item);
 
         System.out.println("Produto adicionado ao carrinho!");
@@ -265,6 +273,7 @@ public class MenuPedido {
         System.out.println("7 - Listar itens do pedido");
         System.out.println("8 - Alterar pedido");
         System.out.println("9 - Deletar pedido");
+        System.out.println("10 - Inserir pedido");
         System.out.println("0 - Voltar");
         System.out.print("Escolha: ");
     }
@@ -316,6 +325,9 @@ public class MenuPedido {
 
                 case 9:
                     deletarPedido();
+                    break;
+                case 10:
+                    inserirPedido();
                     break;
 
                 case 0:
